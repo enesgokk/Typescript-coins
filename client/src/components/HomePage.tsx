@@ -1,39 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import CoinTables from "./CoinTables";
+import { getAllCoins } from "../services/coinServices";
+import { useDispatch } from "react-redux";
+
+import { allCoins, removeCoins } from "../features/counter/counterSlice";
 
 const HomePage = () => {
-    const [allData, setAllData] = useState();
+  const [allData, setAllData] = useState<any>([]);
+  const dispatch = useDispatch();
+  var timer;
+  useEffect(() => {
+    async function getPosts() {
+      timer = setInterval(async function() {
+      //setAllData([await getAllCoins()]);
+      dispatch(allCoins([await getAllCoins()]));
+      }, 5000);
+    }
+    getPosts();
+  }, []);
 
-    useEffect(() => {
-        const axios = require('axios');
+  return (
+    <div>
+      <CoinTables /*allData={allData}*/ />
+    </div>
+  );
+};
 
-        let response = null;
-        new Promise(async (resolve, reject) => {
-          try {
-            response = await axios.get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-              headers: {
-                'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
-              },
-            });
-          } catch(ex) {
-            response = null;
-            // error
-            console.log(ex);
-            reject(ex);
-          }
-          if (response) {
-            // success
-            const json = response.data;
-            console.log(json);
-            resolve(json);
-          }
-        });
-    }, [])
-
-
-    return (
-        <div>HomePage</div>
-    )
-}
-
-export default HomePage
+export default HomePage;
