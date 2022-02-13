@@ -18,12 +18,9 @@ export const counterSlice = createSlice({
       state.value=[];
       state.value = [...state.value, action.payload];
     },
-    removeCoins: (state,action: PayloadAction<any>) =>{
-      state.value=[...state.value, action.payload];
-    }
   },
 });
 
-export const { allCoins,removeCoins } = counterSlice.actions;
+export const { allCoins } = counterSlice.actions;
 export const selectCount = (state: RootState) => state.counter.value;
 export default counterSlice.reducer;

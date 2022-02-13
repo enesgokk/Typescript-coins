@@ -3,7 +3,7 @@ import CoinTables from "./CoinTables";
 import { getAllCoins } from "../services/coinServices";
 import { useDispatch } from "react-redux";
 
-import { allCoins, removeCoins } from "../features/counter/counterSlice";
+import { allCoins } from "../features/counter/counterSlice";
 
 const HomePage = () => {
   const [allData, setAllData] = useState<any>([]);
